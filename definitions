@@ -1,0 +1,25 @@
+Alphabet: The alphabet plus the space, any given set of symbols or signals from which messages are constructed.
+Bit: The choice between two equally probable possibilities.
+Block: A sequence of symbols, such as letters or digits.
+Block encoding: Encoding a message for transmission, not letter by letter or digit by digit, but, rather, encoding a sequence of symbols together.
+Capacity: The capacity of a communication channel is equal to the number of bits per second which can be transmitted by means of the channel.
+Check digits: Symbols sent in addition to the number of symbols in the original message, in order to make it possible to detect the presence of or correct errors in transmission.
+Delay: The difference between the time a signal is received and the time it was sent.
+Detection theory: Theory concerning when the presence of a signal can be determined even though the signal is mixed with a specified amount of noise.
+Digram probability: The probability that a particular letter will follow another particular letter.
+Discrete source: A message source which produces a sequence of symbols such as letters or digits, rather than an electric signal which may have any value at a given time.
+Ensemble: All of an infinite number of things taken together, such as, all the messages that a given message source can produce.
+Entropy: In communication theory, entropy is interpreted as average uncertainty or choice, e.g., the average uncertainty as to what symbol the source will produce next or the average choice the source has as to what symbol it will produce next.
+Equivocation: The uncertainty as to what symbols were transmitted when the received symbols are known.
+Finite-state machine: A machine which has only a finite number of different states or conditions. A switch which can be set at any of ten positions is a very simple finite-state machine.
+Latency: Interval of time between a stimulus and the response to it.
+Linear: An electric circuit or any system or device is linear if the response to the sum of two signals is the sum of the responses which would have been obtained had the signals been applied separately.
+Map: To assign on one diagram a point corresponding to every point on another diagram.
+Message: A string of symbols; an electric signal.
+Noise: Any undesired disturbance in a signaling system, such as, random electric currents in a telephone system.
+Periodic: Repeating exactly and regularly time after time.
+Random: Unpredictable.
+Redundant: A redundant signal contains detail not necessary to determine the intent of the sender. If each digit of a number is sent twice (110011 instead of 101) the signal or message is redundant.
+Signal: Any varying electric current deliberately transmitted by an electrical communication system.
+Stochastic: A machine or any process which has an output, such as letters or numbers, is stochastic if the output is in part dependent on truly random or unpredictable events.
+Symbol: A letter, digit, or one of a group of agreed upon marks. Linguists distinguish a symbol, whose association with meaning or objects is arbitrary, from a sign, such as a pictograph of a waterfall.

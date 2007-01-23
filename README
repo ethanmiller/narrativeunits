@@ -1,0 +1,21 @@
+Narrative Units
+
+== Statement
+
+The Narrative Units project addresses a number of questions by interconnecting several systems of interest. Information Theory, which strictly concerns itself with the encoding and transmission of data, is displaced into the context of a literary narrative. This framing serves to evoke question surrounding the dispersion of Information Theory and other paradigms of first-wave cybernetics into contemporary culture.
+
+The source text, narratives from Project Gutenberg (http://www.gutenberg.org/), are treated as a message source. In terms of the Narrative Units system, the text displayed in white is noise. The system matches a particular string of symbols which correspond to a set of definitions from an introductory text on Information Theory. Matching words are displayed in red, and placed in one of the lower panels of the visualization.
+
+The pairing of a highly formalized, and technical set of concepts and fictional narratives complicate the distinction between different aspects of language and communication. Language as a set of discreet symbols which encode some content is subject to the manipulations of formal logic systems. Language as the medium for non-linear, non-rational narrative communication is another thing entirely.
+
+The ambiguous relationships between narrative, language and formal theories about communications are further explored in video. Each video sequence represents a simplified noun verb combination, 'open door,' 'descend stairs,' etc. This formula is designed to address the point at which two discreet pieces of information (a verb and a noun, 'open' and 'door' for example) combine into the flow of a narrative. The frame-rate of the video sequences is controlled by the text matching part of the system. As a result, the flow of the video is also complicated by the perceptible presence of it's discrete components (frames).
+
+Narrative Units in isolation is software system that manipulates and displays data. The inputs (literary narratives) and the larger system that results from it's presentation to an audience (especially in the context of the conventions of film and literature) tests the boundaries between data and narrative.
+
+== Details
+
+Narrative Units is written in Python, and depends on PyGame and BeautifulSoup.
+
+Zip files are collected from the Project Gutenberg repository (http://www.gutenberg.org/). Specifically, the zip files are collected from the robotting area of Project Gutenberg as described here: http://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages. The relatively slow rate of the visualization prevents the code from hitting the Project Gutenberg site too frequently. The zip files are kept in the 'zips' folder, and the 'offset' file keeps track of the progress of the visualization so that even if you restart the visualization, it will continue where it left off before.
+
+To run Narrative Units, make the file 'narrbiter' executable, and run. To switch to fullscreen while running, press F10. To quit, press ESC.
