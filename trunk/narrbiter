@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+import re, time, reader, drawer
+
+class Arbiter:
+	def __init__(self, pausefactor=0.5):
+		self.deadwords = 0
+		self.deadletters = 0
+		self.deadword_limit = 1000
+		self.deadletter_limit = 1000
+		self.by_word = True
+		self.terms = []
+		self.definitions = {}
+		self.wex = re.compile("\w+") # string of letters, any length
+		self.cex = re.compile("\W") # any single non letter
+		# get definitions
+		d = open("definitions")
+		dlines = d.readlines()
+		d.close()
+		for l in dlines:
+			indx = l.index(':')
+			self.terms.append(l[:indx])
+			self.definitions[l[:indx]] = l[indx+1:].split()
+		self.term = self.terms[0]
+		self.defi = self.definitions[self.term][:]
+		self.reader = reader.Reader()
+		self.drawer = drawer.Drawer()
+
+	def definext(self):
+		if len(self.defi) == 0:
+			newindx = (self.terms.index(self.term) + 1) % len(self.terms)
+			self.term = self.terms[newindx]
+			self.defi = self.definitions[self.term][:]
+		return self.defi.pop(0)
+
+	def cleaner(self, w):
+		find = self.wex.findall(w)
+		if find:
+			return reduce(lambda x,y: x+y, find).lower()
+		else:
+			return ''
+
+	def charplus(self, w):
+		'''returns the next character, plus any \W characters that come after, along with the remainder of the word.'''
+		if not w:
+			return ''
+		c = w[0]
+		rem = w[1:]
+		while len(rem) > 0 and self.cex.match(rem[0]):
+			c += rem[0]
+			rem = rem[1:]
+		return (c, rem)
+
+	def loop(self):
+		nword, cnword, dword, cdword = ('', '', '', '') # narrative word, cleaned narrative word, definition word, clean definition word
+		while 1:
+			madness, ct = (100, 0)
+			while not cdword:
+				dword = self.definext()
+				cdword = self.cleaner(dword)
+				self.by_word = True
+				ct += 1
+				if ct > madness:
+					# this would happen if there were endless \W+ words in the definition file
+					raise IndexError, "WTF1"
+			ct = 0
+			while not cnword:
+				source, nword = self.reader.next()
+				cnword = self.cleaner(nword)
+				ct += 1
+				if ct > madness:
+					# this would happen if there were endless \W+ words in the Gutenber text
+					raise IndexError, "WTF2"
+			if self.by_word:
+				if cnword == cdword:
+					# matched word!
+					self.drawer.draw(source, self.term, dword, nword, True)
+					nword, cnword, dword, cdword, self.deadwords = ('', '', '', '', 0)
+				else:
+					self.deadwords += 1
+					self.drawer.draw(source, self.term, dword, nword)
+					cnword, nword = ('', '')
+					if self.deadwords > self.deadword_limit:
+						self.by_word = False
+						self.deadwords = 0
+			else:
+				if cnword[0] == cdword[0]:
+					# matched letter!
+					self.deadletters = 0 # reset dead letter count
+					# trim down the actual words, plus get the next printable letter(s) - may include non-letters .,' etc
+					dchar, dword = self.charplus(dword)
+					nchar, nword = self.charplus(nword)
+					# the cleaned words can just be trimmed by one...
+					cnword = cnword[1:]
+					cdword = cdword[1:]
+					dsp = len(dword) == 0 # if this is the last char in the word, add space
+					nsp = len(nword) == 0
+					self.drawer.draw(source, self.term, dchar, nchar, True, dsp, nsp)
+				else:
+					self.deadletters += 1
+					# we might print the next narrative character, for sure we don't need to keep it
+					nchar, nword = self.charplus(nword)
+					nsp = len(nword) == 0
+					cnword = cnword[1:]
+					if self.deadletters > self.deadletter_limit:
+						# give up, just pretend we matched this letter
+						dchar, dword = self.charplus(dword)
+						cdword = cdword[1:]
+						dsp = len(dword) == 0 # if this is the last char in the word, add space
+						# special case: says it's a match, but bits don't match
+						self.drawer.draw(source, self.term, dchar, nchar, True, dsp, nsp) 
+						self.deadletters = 0
+					else:
+						dchar = self.charplus(dword)[0] # just get the def char, don't trim definition word
+						self.drawer.draw(source, self.term, dchar, nchar, False, False, nsp)
+
+def main():
+	a = Arbiter()
+	a.loop()
+
+if __name__ == '__main__' :
+        main()
